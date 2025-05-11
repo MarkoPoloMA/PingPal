@@ -14,6 +14,7 @@
   <ItemGroup>
     <PackageReference Include="Grace" Version="7.2.1" />
     <PackageReference Include="Grace.Factory" Version="7.2.1" />
+    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="MvvmLightLibs" Version="5.4.1.1" />
   </ItemGroup>
 

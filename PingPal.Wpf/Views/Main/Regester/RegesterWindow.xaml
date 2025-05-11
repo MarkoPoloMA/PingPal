@@ -9,22 +9,26 @@
                       mc:Ignorable="d"
 		FontSize="20"
 		Title="{Binding Header, Mode=OneWay}"
-		Width="506"
-		SizeToContent="Height" Height="257">
+		Width="400"
+		SizeToContent="Height">
 
-    <!--<Window.Resources>
+	<!--<Window.Resources>
 		<wpf:DemoModel x:Key="DemoModel" />
 	</Window.Resources>-->
 
-    <Grid Margin="0,0,0,-48">
+    <Grid Height="318">
+       
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                 <GradientStop Color="#FF1E3C72" Offset="0"/>
                 <GradientStop Color="#FF2A5298" Offset="1"/>
             </LinearGradientBrush>
         </Grid.Background>
-        <Grid Width="392" VerticalAlignment="Center" HorizontalAlignment="Center" Height="253">
+
+        
+        <Grid Width="300" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -32,17 +36,23 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
 
-           
-            <TextBlock Text="Вход" 
+            <TextBlock Text="Регистрация" 
                        Grid.Row="0"
                        FontSize="20"
                        Foreground="White"
                        HorizontalAlignment="Center"
                        Margin="0,0,0,20"/>
 
-            
-            <TextBox x:Name="LoginTextBox" 
+            <TextBox x:Name="NameTextBox" 
                      Grid.Row="1"
+                     Margin="0,0,0,10"
+                     Padding="5"
+                     Background="#FFF"
+                     BorderBrush="#AAA"
+                     Text="Имя"/>
+
+            <TextBox x:Name="LoginTextBox" 
+                     Grid.Row="2"
                      Margin="0,0,0,10"
                      Padding="5"
                      Background="#FFF"
@@ -50,44 +60,30 @@
                      Text="Логин"/>
 
             <PasswordBox x:Name="PasswordBox" 
-                         Grid.Row="2"
-                         Margin="0,0,0,20"
+                         Grid.Row="3"
+                         Margin="0,0,0,10"
                          Padding="5"
                          Background="#FFF"
                          BorderBrush="#AAA"
                          Password="Пароль"/>
 
-           
-            <Button x:Name="LoginButton" 
-                    Grid.Row="3"
-                    Content="Войти"
+            <PasswordBox x:Name="ConfirmPasswordBox" 
+                         Grid.Row="4"
+                         Margin="0,0,0,20"
+                         Padding="5"
+                         Background="#FFF"
+                         BorderBrush="#AAA"
+                         Password="Подтвердите пароль"/>
+
+            <Button x:Name="RegisterButton" 
+                    Grid.Row="5"
+                    Content="Зарегистрироваться"
                     Background="#4CAF50"
                     Foreground="White"
                     BorderBrush="Transparent"
                     Padding="10,5"
                     FontWeight="Bold"
-                    Click="LoginButton_Click"/>
-
-            <TextBlock Grid.Row="4"
-                       Text="Нет аккаунта? Зарегистрироваться"
-                       Foreground="White"
-                       HorizontalAlignment="Center"
-                       Margin="0,10,0,0"
-                       Cursor="Hand">
-                <TextBlock.Style>
-                    <Style TargetType="TextBlock">
-                        <Setter Property="TextDecorations" Value="None"/>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="TextDecorations" Value="Underline"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-                <TextBlock.InputBindings>
-                    <MouseBinding Gesture="LeftClick" Command="{Binding OpenRegisterCommand}"/>
-                </TextBlock.InputBindings>
-            </TextBlock>
+                    Click="RegisterButton_Click"/>
         </Grid>
     </Grid>
 </controls:MetroWindow>

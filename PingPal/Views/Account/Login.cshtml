@@ -1,0 +1,28 @@
+﻿@model PingPal.Models.Account.LoginModel
+
+<h2>Вход в систему</h2>
+
+@using (Html.BeginForm("Login", "Account", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    <div>
+        <label for="Login">Логин:</label>
+        @Html.TextBoxFor(model => model.Login)
+        @Html.ValidationMessageFor(model => model.Login)
+    </div>
+
+    <div>
+        <label for="Password">Пароль:</label>
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </div>
+
+    <div>
+        <button type="submit">Войти</button>
+    </div>
+
+    <div>
+        <a href="@Url.Action("Register", "Account")">Регистрация</a>
+    </div>
+}

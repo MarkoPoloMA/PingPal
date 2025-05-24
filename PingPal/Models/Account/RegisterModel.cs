@@ -15,11 +15,11 @@ public class RegisterModel
     [Required(ErrorMessage = "Неверный пароль")]
     [MinLength(5, ErrorMessage = "Минимальный пароль 5 символов")]
     public string Password { get; set; }
-    public string Name { get; set; }
 
     [DisplayName("Подтверждение пароля")]
     [Required(ErrorMessage = "Подтверждение обязательно.")]
     [Compare("Password", ErrorMessage = "Пароли не совпадают.")]
     public string? ConfirmPassword { get; set; }
+	public string? ReturnUrl { get; set; }
 }
 

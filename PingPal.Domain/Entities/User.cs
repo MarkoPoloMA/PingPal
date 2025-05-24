@@ -5,6 +5,5 @@ public class User
     public string? Name { get; set; }
     public string? NormalizedName { get; set; }
     public string? PasswordHash { get; set; }
-    public DateTime RegistrationDate { get; set; }
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 }

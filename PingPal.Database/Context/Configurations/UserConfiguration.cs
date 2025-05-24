@@ -9,11 +9,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 	{
 		modelBuilder.Property(login => login.NormalizedName)
 			.IsRequired()
-			.HasMaxLength(100);
+			.HasMaxLength(256);
 
 		modelBuilder.Property(name => name.Name)
 			.IsRequired()
-			.HasMaxLength(100);
+			.HasMaxLength(256);
 
         modelBuilder.HasIndex(login => login.NormalizedName)
 			.IsUnique();
@@ -23,9 +23,6 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         modelBuilder.Property(pass => pass.PasswordHash)
 			.IsRequired()
-			.HasMaxLength(50);
-
-		modelBuilder.Property(data => data.RegistrationDate)
-			.ValueGeneratedOnAddOrUpdate();
+			.HasMaxLength(256);
 	}
 }

@@ -8,5 +8,6 @@ public class LoginModel
     public string Login { get; set; }
     [DisplayName("Введите пароль:")]
     public string Password { get; set; }
+	public string? ReturnUrl { get; set; }
 }
 

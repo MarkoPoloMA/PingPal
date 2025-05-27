@@ -3,8 +3,6 @@ using PingPal.Database.Context.Factory;
 using PingPal.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Threading;
 
 namespace PingPal.Store
 {

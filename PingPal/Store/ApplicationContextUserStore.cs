@@ -2,14 +2,12 @@
 using PingPal.Database.Context;
 using PingPal.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
-using System.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
-using System.Resources;
 using UserRole = PingPal.Domain.Entities.UserRole;
 using PingPal.Common.Extensions;
 
-namespace AspNetExample.Store
+namespace PingPal.Store
 {
     public class ApplicationContextUserStore : IUserStore<User>, IQueryableUserStore<User>, IUserPasswordStore<User>, IUserRoleStore<User>
     {

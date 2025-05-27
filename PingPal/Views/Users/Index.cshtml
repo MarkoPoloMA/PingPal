@@ -1,0 +1,117 @@
+﻿@* @model IEnumerable<PingPal.Domain.Entities.User>
+
+@{
+    ViewData["Title"] = "Список пользователей";
+}
+
+<h1>Список пользователей</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Email</th>
+            <th>Роли</th>
+            <th>Действия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#editUserModal" data-id="@user.Id">Редактировать</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editUserModalLabel">Редактировать пользователя</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="editUserForm" method="post" action="@Url.Action("Edit")">
+                <div class="modal-body">
+                    <input type="hidden" id="userId" name="Id" />
+                    <div class="form-group">
+                        <label for="userName">Имя пользователя</label>
+                        <input type="text" class="form-control" id="userName" name="Name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="currentPassword">Текущий пароль</label>
+                        <input type="password" class="form-control" id="currentPassword" name="CurrentPassword" />
+                    </div>
+                    <div class="form-group">
+                        <label for="newPassword">Новый пароль</label>
+                        <input type="password" class="form-control" id="newPassword" name="NewPassword" />
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="hasAdminRole" name="HasAdminRole" />
+                            <label class="form-check-label" for="hasAdminRole">Администратор</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#editUserModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); 
+                var userId = button.data('id'); 
+                var modal = $(this);
+
+                // AJAX запрос для получения данных пользователя
+                $.ajax({
+                    url: '@Url.Action("Edit", "Users")/' + userId,
+                    type: 'GET',
+                    success: function (data) {
+                        modal.find('#userId').val(data.id);
+                        modal.find('#userName').val(data.name);
+                        modal.find('#hasAdminRole').prop('checked', data.hasAdminRole);
+                    }
+                });
+            });
+        });
+    </script>
+}
+ *@
+@model IEnumerable<PingPal.Domain.Entities.User>
+
+@{
+    ViewData["Title"] = "Список пользователей";
+}
+
+<h1>Список пользователей</h1>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Имя пользователя</th>
+        <th>Email</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Name</td>
+        </tr>
+    }
+    </tbody>
+</table>

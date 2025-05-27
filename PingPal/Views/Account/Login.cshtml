@@ -1,28 +1,41 @@
 ﻿@model PingPal.Models.Account.LoginModel
 
-<h2>Вход в систему</h2>
+<style>
+    table, th, td {
+        place-content: center;
+    }
+</style>
+
+<div class="text-center">
+    <h2>Вход</h2>
+</div>
+<p>Введите логин и пароль для входа</p>
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
 
-    <div>
-        <label for="Login">Логин:</label>
-        @Html.TextBoxFor(model => model.Login)
-        @Html.ValidationMessageFor(model => model.Login)
+    <div style="margin-top: 20px; justify-items: center;">
+        <label asp-for="Login">@Html.DisplayNameFor(model => model.Login):</label>
+        <input asp-for="Login" class="form-control" style="width: 300px;" />
+        <span asp-validation-for="Login" class="text-danger"></span>
     </div>
 
-    <div>
-        <label for="Password">Пароль:</label>
-        @Html.PasswordFor(model => model.Password)
-        @Html.ValidationMessageFor(model => model.Password)
+    <div style="margin-top: 20px; justify-items: center;">
+        <label asp-for="Password">@Html.DisplayNameFor(model => model.Password):</label>
+        <input asp-for="Password" class="form-control" style="width: 300px;" />
+        <span asp-validation-for="Password" class="text-danger"></span>
     </div>
 
-    <div>
-        <button type="submit">Войти</button>
-    </div>
+    <input asp-for="ReturnUrl" type="hidden" value="@Model.ReturnUrl" />
 
-    <div>
-        <a href="@Url.Action("Register", "Account")">Регистрация</a>
-    </div>
+    <p>
+        <input type="submit" value="Войти" />
+    </p>
 }
+
+<div class="text-center" style="margin-top: 40px">
+    Нет аккаунта?
+    <br />
+    <a asp-action="Register" class="nav-link">Регистрация</a>
+</div>

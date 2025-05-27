@@ -20,11 +20,12 @@ namespace PingPal.Controllers
             _signInManager = signInManager;
             _logger = logger;
         }
-        [HttpGet("login")]
-        public async Task<IActionResult> Login()
-        {
-            return View();
-        }
+		[HttpGet("login")]
+		public IActionResult Login(string returnUrl = null)
+		{
+			var model = new LoginModel { ReturnUrl = returnUrl };
+			return View(model);
+		}
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
@@ -33,15 +34,15 @@ namespace PingPal.Controllers
             {
                 return BadRequest(loginModel);
             }
-            var result = await _signInManager.PasswordSignInAsync(loginModel.Login, loginModel.Password, false, lockoutOnFailure: false);
+			var result = await _signInManager.PasswordSignInAsync(loginModel.Login, loginModel.Password, false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Users");
             }
             else ModelState.AddModelError(string.Empty, "Неправильный логин или пароль");
 
-            return RedirectToAction("Index", "Home");
-        }
+            return RedirectToAction("Index", "Users");
+        }	
 		[HttpGet("register")]
 		public IActionResult Register(string returnUrl = null)
 		{
@@ -49,7 +50,7 @@ namespace PingPal.Controllers
 			return View(model);
 		}
 
-        [HttpPost("register")]
+		[HttpPost("register")]
 		public async Task<IActionResult> Register([FromForm] RegisterModel registerModel)
 		{
 			if (!ModelState.IsValid)
@@ -61,10 +62,14 @@ namespace PingPal.Controllers
 			if (conflictedUser != null)
 			{
 				ModelState.AddModelError(nameof(registerModel.Login), "Логин уже зарегистрирован");
-				return View(registerModel); 
+				return View(registerModel);
 			}
 
-			var user = new User { Id = Guid.NewGuid(), Name = registerModel.Login };
+			var user = new User
+			{
+				Id = Guid.NewGuid(),
+				Name = registerModel.Login
+			};
 
 			var result = await _userManager.CreateAsync(user, registerModel.Password);
 			if (!result.Succeeded)
@@ -75,10 +80,10 @@ namespace PingPal.Controllers
 				}
 				return View(registerModel);
 			}
-
-			await _signInManager.SignInAsync(user, false);
-
-			return RedirectToAction("Index", "Home");
+			
+			await _signInManager.SignInAsync(user, isPersistent: false);
+			
+			return RedirectToAction("Index", "Users");
 		}
 
         public IActionResult AccessDenied()

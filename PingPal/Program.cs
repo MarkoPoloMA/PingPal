@@ -1,9 +1,7 @@
-using AspNetExample.Store;
 using PingPal.Database.Context.Factory;
 using PingPal.Domain.Entities;
 using PingPal.Middlewares;
 using PingPal.Store;
-using Microsoft.AspNetCore.Builder;
 
 namespace PingPal
 {

@@ -5,14 +5,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using PingPal;
 using PingPal.Domain.Dtos;
 using PingPal.Domain.Dtos.User;
 using PingPal.Domain.Entities;
 using PingPal.Exceptions;
 using PingPal.Extensions;
 
-namespace AspNetExample.Controllers.Api;
+namespace PingPal.Controllers.Api;
 
 [Authorize]
 [ApiController]

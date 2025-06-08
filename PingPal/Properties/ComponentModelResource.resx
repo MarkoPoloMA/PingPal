@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <!-- ReSharper disable DuplicateResource -->
+  <data name="ArgumentIsNullOrWhitespace" xml:space="preserve">
+    <value>Аргумент '{0}' не может быть нулевым, пустым или содержать только пробелы.</value>
+  </data>
+  <data name="AssociatedMetadataTypeTypeDescriptor_MetadataTypeContainsUnknownProperties" xml:space="preserve">
+    <value>Связанный тип метаданных для типа '{0}' содержит следующие неизвестные свойства или поля: {1}. Убедитесь, что имена этих членов совпадают с именами свойств основного типа.</value>
+  </data>
+  <data name="AttributeStore_Unknown_Property" xml:space="preserve">
+    <value>Тип '{0}' не содержит публичного свойства с именем '{1}'.</value>
+  </data>
+  <data name="Common_PropertyNotFound" xml:space="preserve">
+    <value>Свойство {0}.{1} не найдено.</value>
+  </data>
+  <data name="CompareAttribute_MustMatch" xml:space="preserve">
+    <value>'{0}' и '{1}' не совпадают.</value>
+  </data>
+  <data name="CompareAttribute_UnknownProperty" xml:space="preserve">
+    <value>Не удалось найти свойство с именем {0}.</value>
+  </data>
+  <data name="CreditCardAttribute_Invalid" xml:space="preserve">
+    <value>{0} не является действительным номером кредитной карты.</value>
+  </data>
+  <data name="CustomValidationAttribute_Method_Must_Return_ValidationResult" xml:space="preserve">
+    <value>Метод CustomValidationAttribute '{0}' в типе '{1}' должен возвращать System.ComponentModel.DataAnnotations.ValidationResult. Используйте System.ComponentModel.DataAnnotations.ValidationResult.Success для представления успеха.</value>
+  </data>
+  <data name="CustomValidationAttribute_Method_Not_Found" xml:space="preserve">
+    <value>Метод CustomValidationAttribute '{0}' не существует в типе '{1}' или не является публичным и статическим.</value>
+  </data>
+  <data name="CustomValidationAttribute_Method_Required" xml:space="preserve">
+    <value>CustomValidationAttribute.Method не указан.</value>
+  </data>
+  <data name="CustomValidationAttribute_Method_Signature" xml:space="preserve">
+    <value>Метод CustomValidationAttribute '{0}' в типе '{1}' должен соответствовать ожидаемой сигнатуре: public static ValidationResult {0}(object value, ValidationContext context). Значение может быть строго типизировано. Параметр ValidationContext является необязательным.</value>
+  </data>
+  <data name="CustomValidationAttribute_Type_Conversion_Failed" xml:space="preserve">
+    <value>Не удалось преобразовать значение типа '{0}' в '{1}', как ожидалось методом {2}.{3}.</value>
+  </data>
+  <data name="CustomValidationAttribute_Type_Must_Be_Public" xml:space="preserve">
+    <value>Пользовательский тип проверки '{0}' должен быть общедоступным.</value>
+  </data>
+  <data name="CustomValidationAttribute_ValidationError" xml:space="preserve">
+    <value>{0} недопустим.</value>
+  </data>
+  <data name="CustomValidationAttribute_ValidatorType_Required" xml:space="preserve">
+    <value>CustomValidationAttribute.ValidatorType не указан.</value>
+  </data>
+  <data name="DataTypeAttribute_EmptyDataTypeString" xml:space="preserve">
+    <value>Пользовательская строка DataType не может быть нулевой или пустой.</value>
+  </data>
+  <data name="DisplayAttribute_PropertyNotSet" xml:space="preserve">
+    <value>Свойство {0} не установлено. Используйте метод {1} для получения значения.</value>
+  </data>
+  <data name="EmailAddressAttribute_Invalid" xml:space="preserve">
+    <value>{0} не является допустимым адресом электронной почты.</value>
+  </data>
+  <data name="EnumDataTypeAttribute_TypeCannotBeNull" xml:space="preserve">
+    <value>Тип, указанный для EnumDataTypeAttribute, не может быть нулевым.</value>
+  </data>
+  <data name="EnumDataTypeAttribute_TypeNeedsToBeAnEnum" xml:space="preserve">
+    <value>Тип '{0}' должен представлять тип перечисления.</value>
+  </data>
+  <data name="FileExtensionsAttribute_Invalid" xml:space="preserve">
+    <value>{0} принимает только файлы со следующими расширениями: {1}</value>
+  </data>
+  <data name="LocalizableString_LocalizationFailed" xml:space="preserve">
+    <value>Невозможно получить свойство '{0}', так как локализация не удалась. Тип '{1}' не является публичным или не содержит публичного статического строкового свойства с именем '{2}'.</value>
+  </data>
+  <data name="MaxLengthAttribute_InvalidMaxLength" xml:space="preserve">
+    <value>MaxLengthAttribute должен иметь значение Length больше нуля. Используйте MaxLength() без параметров, чтобы указать, что строка или массив могут иметь максимально допустимую длину.</value>
+  </data>
+  <data name="MaxLengthAttribute_ValidationError" xml:space="preserve">
+    <value>{0} должно быть строкой или массивом с максимальной длиной '{1}'.</value>
+  </data>
+  <data name="MetadataTypeAttribute_TypeCannotBeNull" xml:space="preserve">
+    <value>MetadataClassType не может быть нулевым.</value>
+  </data>
+  <data name="MinLengthAttribute_InvalidMinLength" xml:space="preserve">
+    <value>MinLengthAttribute must have a Length value that is zero or greater.</value>
+  </data>
+  <data name="MinLengthAttribute_ValidationError" xml:space="preserve">
+    <value>MinLengthAttribute должен иметь значение Length, равное нулю или больше.</value>
+  </data>
+  <data name="LengthAttribute_InvalidValueType" xml:space="preserve">
+    <value>Поле типа {0} должно быть строкой, массивом или типом ICollection.</value>
+  </data>
+  <data name="PhoneAttribute_Invalid" xml:space="preserve">
+    <value>{0} не является допустимым номером телефона.</value>
+  </data>
+  <data name="RangeAttribute_ArbitraryTypeNotIComparable" xml:space="preserve">
+    <value>Тип {0} должен реализовывать {1}.</value>
+  </data>
+  <data name="RangeAttribute_MinGreaterThanMax" xml:space="preserve">
+    <value>Максимальное значение '{0}' должно быть больше или равно минимальному значению '{1}'.</value>
+  </data>
+  <data name="RangeAttribute_Must_Set_Min_And_Max" xml:space="preserve">
+    <value>Необходимо установить минимальное и максимальное значения.</value>
+  </data>
+  <data name="RangeAttribute_Must_Set_Operand_Type" xml:space="preserve">
+    <value>Необходимо задать OperandType, если для минимальных и максимальных значений используются строки.</value>
+  </data>
+  <data name="RangeAttribute_ValidationError" xml:space="preserve">
+    <value>{0} должно быть между {1} ​​и {2}.</value>
+  </data>
+  <data name="RegexAttribute_ValidationError" xml:space="preserve">
+    <value>{0} должно соответствовать регулярному выражению '{1}'.</value>
+  </data>
+  <data name="RegularExpressionAttribute_Empty_Pattern" xml:space="preserve">
+    <value>Шаблон должен быть задан как допустимое регулярное выражение.</value>
+  </data>
+  <data name="RequiredAttribute_ValidationError" xml:space="preserve">
+    <value>{0} обязательно для заполнения.</value>
+  </data>
+  <data name="StringLengthAttribute_InvalidMaxLength" xml:space="preserve">
+    <value>Максимальная длина должна быть неотрицательным целым числом.</value>
+  </data>
+  <data name="StringLengthAttribute_ValidationError" xml:space="preserve">
+    <value>{0} должно быть строкой с максимальной длиной {1}.</value>
+  </data>
+  <data name="StringLengthAttribute_ValidationErrorIncludingMinimum" xml:space="preserve">
+    <value>{0} должно быть строкой с минимальной длиной {2} и максимальной длиной {1}.</value>
+  </data>
+  <data name="UIHintImplementation_ControlParameterKeyIsNotAString" xml:space="preserve">
+    <value>Параметр ключа в позиции {0} со значением '{1}' не является строкой. Каждый параметр управления ключом должен быть строкой.</value>
+  </data>
+  <data name="UIHintImplementation_ControlParameterKeyIsNull" xml:space="preserve">
+    <value>Параметр ключа в позиции {0} нулевой. Каждый параметр управления ключом должен быть строкой.</value>
+  </data>
+  <data name="UIHintImplementation_ControlParameterKeyOccursMoreThanOnce" xml:space="preserve">
+    <value>Параметр ключа в позиции {0} со значением '{1}' встречается более одного раза.</value>
+  </data>
+  <data name="UIHintImplementation_NeedEvenNumberOfControlParameters" xml:space="preserve">
+    <value>Число контрольных параметров должно быть четным.</value>
+  </data>
+  <data name="UrlAttribute_Invalid" xml:space="preserve">
+    <value>{0} не является допустимым полностью квалифицированным URL-адресом http, https или ftp.</value>
+  </data>
+  <data name="ValidationAttribute_Cannot_Set_ErrorMessage_And_Resource" xml:space="preserve">
+    <value>Необходимо задать либо ErrorMessageString, либо ErrorMessageResourceName, но не оба одновременно.</value>
+  </data>
+  <data name="ValidationAttribute_IsValid_NotImplemented" xml:space="preserve">
+    <value>IsValid(object value) не был реализован этим классом. Предпочтительной точкой входа является GetValidationResult(), а классы должны переопределять IsValid(object value, ValidationContext context).</value>
+  </data>
+  <data name="ValidationAttribute_NeedBothResourceTypeAndResourceName" xml:space="preserve">
+    <value>Для этого атрибута необходимо задать как ErrorMessageResourceType, так и ErrorMessageResourceName.</value>
+  </data>
+  <data name="ValidationAttribute_ResourcePropertyNotStringType" xml:space="preserve">
+    <value>Свойство '{0}' типа ресурса '{1}' не является строковым типом.</value>
+  </data>
+  <data name="ValidationAttribute_ResourceTypeDoesNotHaveProperty" xml:space="preserve">
+    <value>Тип ресурса '{0}' не имеет доступного статического свойства с именем '{1}'.</value>
+  </data>
+  <data name="ValidationAttribute_ValidationError" xml:space="preserve">
+    <value>{0} недопустимо.</value>
+  </data>
+  <data name="Validator_InstanceMustMatchValidationContextInstance" xml:space="preserve">
+    <value>Предоставленный экземпляр должен соответствовать ObjectInstance в предоставленном ValidationContext.</value>
+  </data>
+  <data name="Validator_Property_Value_Wrong_Type" xml:space="preserve">
+    <value>Значение свойства '{0}' должно иметь тип '{1}'.</value>
+  </data>
+  <data name="ValueIsInvalidAccessor" xml:space="preserve">
+    <value>Значение '{0}' недопустимо.</value>
+  </data>
+  <data name="ValueMustBeANumberAccessor" xml:space="preserve">
+    <value>{0} должно быть числом.</value>
+  </data>
+  <data name="MissingBindRequiredValueAccessor" xml:space="preserve">
+    <value>Значение свойства '{0}' не указано.</value>
+  </data>
+  <data name="AttemptedValueIsInvalidAccessor" xml:space="preserve">
+    <value>Значение '{0}' недопустимо.</value>
+  </data>
+  <data name="MissingKeyOrValueAccessor" xml:space="preserve">
+    <value>Требуется значение.</value>
+  </data>
+  <data name="UnknownValueIsInvalidAccessor" xml:space="preserve">
+    <value>Предоставленное значение недопустимо.</value>
+  </data>
+  <data name="ValueMustNotBeNullAccessor" xml:space="preserve">
+    <value>Значение '{0}' недопустимо.</value>
+  </data>
+  <data name="MissingRequestBodyRequiredValueAccessor" xml:space="preserve">
+    <value>Требуется не пустое тело запроса.</value>
+  </data>
+  <data name="NonPropertyAttemptedValueIsInvalidAccessor" xml:space="preserve">
+    <value>Значение '{0}' недопустимо.</value>
+  </data>
+  <data name="NonPropertyUnknownValueIsInvalidAccessor" xml:space="preserve">
+    <value>Предоставленное значение недопустимо.</value>
+  </data>
+  <data name="NonPropertyValueMustBeANumberAccessor" xml:space="preserve">
+    <value>Поле должно быть числом.</value>
+  </data>
+  <!-- ReSharper restore DuplicateResource -->
+</root>

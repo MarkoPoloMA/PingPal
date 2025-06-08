@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PingPal.Domain.Entities;
+﻿namespace PingPal.Domain.Entities;
 public class UserChat
 {
     public Guid UserId { get; set; }

@@ -1,6 +1,5 @@
 ﻿@using PingPal.Extensions
 @using PingPal.Models.Users
-@using Microsoft.AspNetCore.Mvc.TagHelpers
 @model PingPal.Models.Users.UsersIndexModel
 @{
     ViewData["Title"] = "Пользователи";
@@ -21,6 +20,25 @@
 
     th {
         background-color: #f8f9fa;
+    }
+
+    .modal {
+        display: none;
+        position: fixed; 
+        z-index: 1; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
     }
 </style>
 
@@ -48,7 +66,8 @@
         <tr>
             <th style="width: 25%;">@Html.DisplaySortColumnTitle(Context, Model.SortBy, nameof(UserModel.Id), model => model.Users.First().Id, true)</th>
             <th style="width: 25%;">@Html.DisplaySortColumnTitle(Context, Model.SortBy, nameof(UserModel.Login), model => model.Users.First().Login)</th>
-            <th>Роли</th>
+            <th style="width: 20%;">Админ</th>
+            <th>Чаты</th>
             <th>Действия</th>
         </tr>
     </thead>
@@ -60,7 +79,19 @@
                 <tr>
                     <td>@user.Id</td>
                     <td>@user.Login</td>
-                    @* <td>@string.Join(", ", user.Roles.Select(r => r.Name))</td> <!-- Предполагается, что у вас есть свойство Roles --> *@
+                    <td>
+                        @if (user.HasAdminRole)
+                        {
+                            <span class="text-success">&#10003;</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">&#10008;</span>
+                        }
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-info btn-sm" onclick="openChatModal('@user.Id')">Посмотреть чаты</button>
+                    </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning btn-sm">Редактировать</a>
                         <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">Удалить</a>
@@ -71,10 +102,39 @@
         else
         {
             <tr>
-                <td colspan="4" class="text-center">Нет пользователей для отображения.</td>
+                <td colspan="5" class="text-center">Нет пользователей для отображения.</td>
             </tr>
         }
     </tbody>
 </table>
 
 @Html.DisplayPagination(Context, Model)
+
+<div id="chatModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeChatModal()">&times;</span>
+        <h2>Чаты пользователя</h2>
+        <div id="chatList"></div>
+    </div>
+</div>
+
+<script>
+    async function openChatModal(userId)
+    {
+        сonst response = await fetch(/api/chats/user/${userId});
+
+        const chats = await response.json();    
+        const chatList = document.getElementById('chatList');
+
+        document.getElementById('chatModal').style.display = 'block';
+       
+    }
+
+        function closeChatModal() {
+            document.getElementById('chatModal').style.display = 'none';
+        }
+
+        window.onclick = event => {
+            if (event.target === document.getElementById('chatModal')) closeChatModal();
+    }
+</script>

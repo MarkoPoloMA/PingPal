@@ -22,7 +22,4 @@ public class UserModel
 
     [DisplayName("Администратор")]
     public bool HasAdminRole { get; set; }
-
-    [DisplayName("Swagger")]
-    public bool HasSwaggerRole { get; set; }
 }

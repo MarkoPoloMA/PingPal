@@ -1,7 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Домашняя страница";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Добро пожаловать</h1>
+<div class="container">
+    <div class="text-center">
+        <img src="~/images/2.jpg" />
+        <p class="author">ZVGorshkov and markonii</p>
+    </div>
 </div>
+
+<style>
+    body {
+        background-color: #f0f0f0; /* Серо-молочный цвет */
+        margin: 0; /* Убираем отступы */
+        padding: 0; /* Убираем отступы */
+        font-family: Arial, sans-serif; /* Шрифт для текста */
+    }
+
+    .text-center {
+        position: relative; /* Добавляем позиционирование для контейнера */
+        text-align: center; /* Центрируем текст */
+        padding: 20px; /* Добавляем немного отступа */
+    }
+
+    .author {
+        font-size: 2em;
+        color: #555;
+        position: absolute; /* Позиционируем автора абсолютно */
+        bottom: -30px; /* Сдвигаем вниз */
+        left: 50%; /* Центрируем по горизонтали */
+        transform: translateX(-50%); /* Центрируем текст */
+    }
+</style>

@@ -29,8 +29,7 @@ public static class UserExtensions
         {
             Id = user.Id,
             Login = user.Name,
-            HasAdminRole = hasAdminRole,
-            HasSwaggerRole = hasSwaggerRole
+            HasAdminRole = hasAdminRole
         };
     }
 }

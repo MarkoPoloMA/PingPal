@@ -1,8 +1,4 @@
-﻿#pragma warning disable CS8618
-// ReSharper disable CollectionNeverUpdated.Global
-// ReSharper disable PropertyCanBeMadeInitOnly.Global
-
-namespace PingPal.Domain.Entities;
+﻿namespace PingPal.Domain.Entities;
 
 public class Role
 {

@@ -93,8 +93,6 @@ public class UsersController : Controller
 
         if (model.HasAdminRole)
             await _applicationContextUserManager.AddToRoleAsync(user, RoleTokens.AdminRole);
-        if (model.HasSwaggerRole)
-            await _applicationContextUserManager.AddToRoleAsync(user, RoleTokens.SwaggerRole);
 
         return RedirectToAction(nameof(Index));
     }
@@ -138,7 +136,7 @@ public class UsersController : Controller
         if (!ModelState.IsValid)
             return View(model);
 
-        var user = await _applicationContextUserManager./*FindByIdAndLoadRolesAsync*/FindByIdAsync(id.ToString());
+        var user = await _applicationContextUserManager.FindByIdAsync(id.ToString());
         if (user == null)
             return NotFound();
 
@@ -154,25 +152,7 @@ public class UsersController : Controller
             await _applicationContextUserManager.UpdateAsync(user);
         }
 
-        //var roles = await _applicationContextUserManager.GetRolesAsync(user);
-
-        //if (roles.Contains(RoleTokens.AdminRole) != model.HasAdminRole)
-        //{
-        //    if (model.HasAdminRole)
-        //        await _applicationContextUserManager.AddToRoleAsync(user, RoleTokens.AdminRole);
-        //    else
-        //        await _applicationContextUserManager.RemoveFromRoleAsync(user, RoleTokens.AdminRole);
-        //}
-
-        //if (roles.Contains(RoleTokens.SwaggerRole) != model.HasSwaggerRole)
-        //{
-        //    if (model.HasSwaggerRole)
-        //        await _applicationContextUserManager.AddToRoleAsync(user, RoleTokens.SwaggerRole);
-        //    else
-        //        await _applicationContextUserManager.RemoveFromRoleAsync(user, RoleTokens.SwaggerRole);
-        //}
-
-        return RedirectToAction(nameof(Index));
+		return RedirectToAction(nameof(Index));
     }
 
     [HttpPost("[controller]/[action]/{id:guid}")]

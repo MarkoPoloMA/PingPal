@@ -1,8 +1,4 @@
-﻿#pragma warning disable CS8618
-// ReSharper disable CollectionNeverUpdated.Global
-// ReSharper disable PropertyCanBeMadeInitOnly.Global
-
-namespace PingPal.Domain.Entities;
+﻿namespace PingPal.Domain.Entities;
 
 public class User
 {
@@ -12,4 +8,5 @@ public class User
     public string PasswordHash { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
     public virtual ICollection<Chat> Chats { get; set; } = new List<Chat>();
+	public bool IsAdmin => UserRoles.Any(ur => ur.Role.Name == "Admin");
 }

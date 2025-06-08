@@ -6,6 +6,7 @@ using PingPal.Service.Stores;
 using Microsoft.AspNetCore.Identity;
 using PingPal.Database.Context.Factory;
 using PingPal.Domain.Entities;
+using PingPal.Service.Chats;
 
 namespace PingPal;
 
@@ -21,6 +22,7 @@ public static class Module
         service.AddScoped<ApplicationContextUserManager>();
         service.AddScoped<ApplicationContextRoleManager>();
         service.AddScoped<ApplicationContextSignInManager>();
+		service.AddScoped<ApplicationContextChatService>();
 
         service.AddScoped<UserManager<User>, ApplicationContextUserManager>();
         service.AddScoped<RoleManager<Role>, ApplicationContextRoleManager>();
@@ -30,6 +32,7 @@ public static class Module
         service.AddScoped<IApplicationContextRoleStore, ApplicationContextRoleStore>();
         service.AddScoped<IApplicationContextStartupService, ApplicationContextStartupService>();
         service.AddScoped<IApplicationContextMigrationsService, ApplicationContextMigrationsService>();
+		service.AddScoped<IApplicationContextChatService, ApplicationContextChatService>();
 
         service.AddIdentity<User, Role>()
             .AddUserStore<ApplicationContextUserStore>()

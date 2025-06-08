@@ -1,12 +1,12 @@
 ﻿using PingPal.Domain.Entities;
-using System;
 
 namespace PingPal.Models;
 public class Message
 {
     public Guid Id { get; set; } 
     public string? Text { get; set; }
-    public DateTime CreationTime { get; set; } 
+    public DateTime CreationTime { get; set; }
+	public DateTime EditTime { get; set; }
     public Guid ChatId { get; set; } 
     public Chat Chat { get; set; } 
     public Guid UserId { get; set; } 

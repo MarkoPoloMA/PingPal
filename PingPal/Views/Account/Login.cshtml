@@ -1,37 +1,43 @@
-﻿@model PingPal.Models.Account.LoginModel
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model PingPal.Models.Account.LoginModel
+@{
+    ViewData["Title"] = "Вход";
+}
 
 <style>
-    table, th, td {
-        place-content: center;
+    label {
+        min-height: calc(1.5rem);
+        padding: 0.2rem 1rem;
+        font-size: 1.25rem;
+    }
+    input, span, button {
+        min-height: calc(2rem);
+        padding: 0.2rem 1rem;
+        font-size: 1.25rem;
     }
 </style>
 
-<div class="text-center">
-    <h2>Вход</h2>
-</div>
-<p>Введите логин и пароль для входа</p>
-
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
-    @Html.ValidationSummary(true)
+    <div style="margin-top: 30px">
+        <div style="margin-top: 20px; justify-items: center;">
+            <label asp-for="Login">@Html.DisplayNameFor(model => model.Login):</label>
+            <input asp-for="Login" class="form-control" style="width: 300px;" />
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
 
-    <div style="margin-top: 20px; justify-items: center;">
-        <label asp-for="Login">@Html.DisplayNameFor(model => model.Login):</label>
-        <input asp-for="Login" class="form-control" style="width: 300px;" />
-        <span asp-validation-for="Login" class="text-danger"></span>
+        <div style="margin-top: 20px; justify-items: center;">
+            <label asp-for="Password">@Html.DisplayNameFor(model => model.Password):</label>
+            <input asp-for="Password" class="form-control" style="width: 300px;" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <input asp-for="ReturnUrl" type="hidden" value="@Model.ReturnUrl" />
+
+        <div class="text-center" style="margin-top: 30px;">
+            <button type="submit" class="btn btn-primary" style="width: 200px;"><i class="fa fa-sign-in"></i> Войти</button>
+        </div>
     </div>
-
-    <div style="margin-top: 20px; justify-items: center;">
-        <label asp-for="Password">@Html.DisplayNameFor(model => model.Password):</label>
-        <input asp-for="Password" class="form-control" style="width: 300px;" />
-        <span asp-validation-for="Password" class="text-danger"></span>
-    </div>
-
-    <input asp-for="ReturnUrl" type="hidden" value="@Model.ReturnUrl" />
-
-    <p>
-        <input type="submit" value="Войти" />
-    </p>
 }
 
 <div class="text-center" style="margin-top: 40px">

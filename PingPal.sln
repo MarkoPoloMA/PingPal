@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingPal", "PingPal\PingPal.csproj", "{D7677966-80C2-4197-991B-A9D3B767540F}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingPal.Domain", "PingPal.Domain\PingPal.Domain.csproj", "{4B704E19-B83A-4C8E-A598-E52F7C39CB43}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingPal.Wpf", "PingPal.Wpf\PingPal.Wpf.csproj", "{A2ED23C3-46A3-435F-9833-E5DA44E9FABB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PingPal.Service", "PingPal.Service\PingPal.Service.csproj", "{815A4138-3D74-4591-8FC1-D924FBC69214}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A2ED23C3-46A3-435F-9833-E5DA44E9FABB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2ED23C3-46A3-435F-9833-E5DA44E9FABB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2ED23C3-46A3-435F-9833-E5DA44E9FABB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{815A4138-3D74-4591-8FC1-D924FBC69214}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{815A4138-3D74-4591-8FC1-D924FBC69214}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{815A4138-3D74-4591-8FC1-D924FBC69214}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{815A4138-3D74-4591-8FC1-D924FBC69214}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,15 +1,14 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mime;
 using System.Security.Claims;
+using PingPal.Extensions;
+using PingPal.Service.Managers;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using PingPal.Domain.Dtos;
-using PingPal.Domain.Dtos.User;
 using PingPal.Domain.Entities;
-using PingPal.Exceptions;
-using PingPal.Extensions;
+using PingPal.Exceptions.Api;
 
 namespace PingPal.Controllers.Api;
 
@@ -19,12 +18,12 @@ namespace PingPal.Controllers.Api;
 [Produces(MediaTypeNames.Application.Json)]
 public class AccountApiController : ControllerBase
 {
-    private readonly UserManager<User> _userManager;
+    private readonly ApplicationContextUserManager _applicationContextUserManager;
 
     public AccountApiController(
-        UserManager<User> userManager)
+        ApplicationContextUserManager applicationContextUserManager)
     {
-        _userManager = userManager;
+        _applicationContextUserManager = applicationContextUserManager;
     }
 
     [AllowAnonymous]
@@ -41,29 +40,11 @@ public class AccountApiController : ControllerBase
         if (!ModelState.IsValid)
             throw new BadRequestException(ModelState.JoinErrors());
 
-        var user = await _userManager.FindByNameAsync(login.Login);
-        if (user == null || !await _userManager.CheckPasswordAsync(user, login.Password))
+        var user = await _applicationContextUserManager./*FindByNameAndLoadRolesAsync*/FindByIdAsync(login.Login);
+        if (user == null || !await _applicationContextUserManager.CheckPasswordAsync(user, login.Password))
             throw new UnauthorizedException("Некорректные логин и(или) пароль");
 
-        var roles = await _userManager.GetRolesAsync(user);
-        var claims = new[]
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                new Claim(ClaimTypes.Name, user.Name)
-            }
-            .Concat(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-
-        var symmetricSecurityKey = Constants.GetJwtSymmetricSecurityKey();
-        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
-
-        var jwtSecurityToken = new JwtSecurityToken(
-            Constants.JwtIssuer,
-            Constants.JwtAudience,
-            claims,
-            expires: DateTime.UtcNow.Add(Constants.JwtLifetime),
-            signingCredentials: signingCredentials);
-
-        var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+        var token = await CreateJwtToken(user);
         return new TokenDto { Token = token };
     }
 
@@ -84,7 +65,7 @@ public class AccountApiController : ControllerBase
         if (register.Password.Length < 6)
             ModelState.AddModelError(nameof(register.Password), "Минимальная длина пароля 6 символов");
 
-        var conflictedUser = await _userManager.FindByNameAsync(register.Login);
+        var conflictedUser = await _applicationContextUserManager.FindByNameAsync(register.Login);
         if (conflictedUser != null)
             ModelState.AddModelError(nameof(register.Login), "Логин уже зарегистрирован");
 
@@ -92,12 +73,22 @@ public class AccountApiController : ControllerBase
             throw new BadRequestException(ModelState.JoinErrors());
 
         var user = new User { Id = Guid.NewGuid(), Name = register.Login };
-        var result = await _userManager.CreateAsync(user, register.Password);
+        var result = await _applicationContextUserManager.CreateAsync(user, register.Password);
         if (!result.Succeeded)
-            throw new InternalServerErrorException(ModelState.JoinErrors());
+            throw new InternalServerErrorException(result.Errors.JoinErrors());
     }
 
-    [HttpPost("changePassword")]
+    [HttpPost("refresh")]
+    public async Task<TokenDto> RefreshToken()
+    {
+        var user = await _applicationContextUserManager.GetUserAndLoadRolesAsync(HttpContext.User)
+            ?? throw new InvalidOperationException("User is null");
+
+        var newToken = await CreateJwtToken(user);
+        return new TokenDto { Token = newToken };
+    }
+
+    [HttpPost("change-password")]
     public async Task ChangePassword(
         [FromBody] ChangePasswordDto changePassword)
     {
@@ -112,11 +103,34 @@ public class AccountApiController : ControllerBase
         if (!ModelState.IsValid)
             throw new BadRequestException(ModelState.JoinErrors());
 
-        var user = await _userManager.GetUserAsync(HttpContext.User)
+        var user = await _applicationContextUserManager.GetUserAsync(HttpContext.User)
             ?? throw new InvalidOperationException("User is null");
 
-        var changePasswordResult = await _userManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
+        var changePasswordResult = await _applicationContextUserManager.ChangePasswordAsync(user, changePassword.OldPassword, changePassword.NewPassword);
         if (!changePasswordResult.Succeeded)
             throw new BadRequestException("Старый пароль некорректен");
+    }
+
+    private async Task<string> CreateJwtToken(User user)
+    {
+        var roles = await _applicationContextUserManager.GetRolesAsync(user);
+        var claims = roles.Select(role => new Claim(ClaimTypes.Role, role))
+            .Prepend(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()))
+            .Prepend(new Claim(ClaimTypes.Name, user.Name));
+
+        var symmetricSecurityKey = Constants.GetJwtSymmetricSecurityKey();
+        var signingCredentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+        var utcNow = DateTime.UtcNow;
+        var jwtSecurityToken = new JwtSecurityToken(
+            Constants.JwtIssuer,
+            Constants.JwtAudience,
+            claims,
+            utcNow,
+            utcNow.Add(Constants.JwtLifetime),
+            signingCredentials);
+
+        var token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+        return token;
     }
 }

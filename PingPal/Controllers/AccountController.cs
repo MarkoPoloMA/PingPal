@@ -1,94 +1,105 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using PingPal.Common.Extensions;
+using PingPal.Service.Managers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PingPal.Domain.Entities;
 using PingPal.Models.Account;
 
-namespace PingPal.Controllers
+namespace PingPal.Controllers;
+
+[Authorize]
+public class AccountController : Controller
 {
-    [AllowAnonymous]
-	[Route("Account")]
-    public class AccountController : Controller
+    private readonly ApplicationContextUserManager _applicationContextUserManager;
+    private readonly ApplicationContextSignInManager _applicationContextSignInManager;
+    private readonly ILogger<AccountController> _logger;
+
+    public AccountController(
+        ApplicationContextUserManager applicationContextUserManager,
+        ApplicationContextSignInManager applicationContextSignInManager,
+        ILogger<AccountController> logger)
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly ILogger<AccountController> _logger;
+        _applicationContextUserManager = applicationContextUserManager;
+        _applicationContextSignInManager = applicationContextSignInManager;
+        _logger = logger;
+    }
 
-        public AccountController(ILogger<AccountController> logger, SignInManager<User> signInManager, UserManager<User> userManager)
+    [AllowAnonymous]
+    public IActionResult Login(
+        [FromQuery] string? returnUrl = null)
+    {
+        return View(new LoginModel { ReturnUrl = returnUrl });
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(
+        [FromForm] LoginModel model)
+    {
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var result = await _applicationContextSignInManager.PasswordSignInAsync(model.Login, model.Password, false, false);
+        if (!result.Succeeded)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            ModelState.AddModelError(nameof(model.Login), "Некорректные логин и(или) пароль");
+            return View(model);
         }
-		[HttpGet("login")]
-		public IActionResult Login(string returnUrl = null)
-		{
-			var model = new LoginModel { ReturnUrl = returnUrl };
-			return View(model);
-		}
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
+        if (model.ReturnUrl.IsSignificant())
+            return Redirect(model.ReturnUrl);
+
+        return RedirectToAction("Index", "Users");
+    }
+
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Register(
+        [FromQuery] string? returnUrl = null)
+    {
+        return View(new RegisterModel { ReturnUrl = returnUrl });
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Register(
+        [FromForm] RegisterModel model)
+    {
+        var conflictedUser = await _applicationContextUserManager.FindByNameAsync(model.Login);
+        if (conflictedUser != null)
+            ModelState.AddModelError(nameof(model.Login), "Логин уже зарегистрирован");
+
+        if (!ModelState.IsValid)
+            return View(model);
+
+        var user = new User { Id = Guid.NewGuid(), Name = model.Login };
+        var result = await _applicationContextUserManager.CreateAsync(user, model.Password);
+        if (!result.Succeeded)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(loginModel);
-            }
-			var result = await _signInManager.PasswordSignInAsync(loginModel.Login, loginModel.Password, false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Index", "Users");
-            }
-            else ModelState.AddModelError(string.Empty, "Неправильный логин или пароль");
-
-            return RedirectToAction("Index", "Users");
-        }	
-		[HttpGet("register")]
-		public IActionResult Register(string returnUrl = null)
-		{
-			var model = new RegisterModel { ReturnUrl = returnUrl };
-			return View(model);
-		}
-
-		[HttpPost("register")]
-		public async Task<IActionResult> Register([FromForm] RegisterModel registerModel)
-		{
-			if (!ModelState.IsValid)
-			{
-				return View(registerModel);
-			}
-
-			var conflictedUser = await _userManager.FindByNameAsync(registerModel.Login);
-			if (conflictedUser != null)
-			{
-				ModelState.AddModelError(nameof(registerModel.Login), "Логин уже зарегистрирован");
-				return View(registerModel);
-			}
-
-			var user = new User
-			{
-				Id = Guid.NewGuid(),
-				Name = registerModel.Login
-			};
-
-			var result = await _userManager.CreateAsync(user, registerModel.Password);
-			if (!result.Succeeded)
-			{
-				foreach (var error in result.Errors)
-				{
-					ModelState.AddModelError(string.Empty, error.Description);
-				}
-				return View(registerModel);
-			}
-			
-			await _signInManager.SignInAsync(user, isPersistent: false);
-			
-			return RedirectToAction("Index", "Users");
-		}
-
-        public IActionResult AccessDenied()
-        {
-            return View();
+            result.Errors.ForEach(error => ModelState.AddModelError(nameof(model.Login), error.Description));
+            return View(model);
         }
+
+        await _applicationContextSignInManager.SignInAsync(user, false);
+
+        if (model.ReturnUrl.IsSignificant())
+            return Redirect(model.ReturnUrl);
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    public async Task<IActionResult> Logout()
+    {
+        await _applicationContextSignInManager.SignOutAsync();
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    [AllowAnonymous]
+    public IActionResult AccessDenied()
+    {
+        return View();
     }
 }

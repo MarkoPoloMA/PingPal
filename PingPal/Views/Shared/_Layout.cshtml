@@ -1,30 +1,94 @@
-﻿<!DOCTYPE html>
+﻿@using PingPal.Domain
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Messenger</title>
+    <title>@ViewData["Title"] - HttpServerAuthorizeExample</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Messenger.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style type="text/css">
+        .props-table {
+            font-size: 1.4rem;
+        }
+
+            .props-table td {
+                padding-left: 20px;
+            }
+
+        .props-margin-top {
+            margin-top: 60px;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function formGetRedirect(event) {
+            var params = new URLSearchParams();
+            [...event.srcElement.elements].forEach(item => {
+                if ((item.nodeName === 'INPUT' || item.nodeName === 'SELECT') && item.id === item.name &&
+                    item.value !== undefined && item.value !== null && item.value !== '')
+                    params.set(item.name, item.value);
+            });
+
+            url = new URL(window.location);
+            if (url.searchParams.has('SortBy'))
+                params.set('SortBy', url.searchParams.get('SortBy'));
+
+            window.location.href = event.target.action + (params.size > 0 ? '?' + params : '');
+            event.preventDefault();
+        }
+
+        function deleteConfirm(entityName, id) {
+            return confirm('Удалить ' + entityName + ' (id = ' + id + ')?');
+        }
+    </script>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Messenger</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HttpServerAuthorizeExample</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @if (Context.User.Identity?.IsAuthenticated == true)
+                        {
+                            @if (Context.User.IsInRole(RoleTokens.AdminRole))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    <ul class="navbar-nav flex-grow-1 justify-content-end">
+                        @if (Context.User.Identity?.IsAuthenticated == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout"><i class="fa fa-sign-out"></i> Выйти [@Context.User.Identity.Name]</a>
+                            </li>
+                            @if (Context.User.IsInRole(RoleTokens.SwaggerRole))
+                            {
+                                <li class="nav-item">
+                                    @* ReSharper disable Html.PathError *@
+                                    <a class="nav-link text-dark" href="/swagger/index.html"><i class="fa fa-code"></i> Api</a>
+                                    @* ReSharper restore Html.PathError *@
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Login"><i class="fa fa-sign-in"></i> Войти</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -38,12 +102,11 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2025 - Messenger - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

@@ -6,7 +6,8 @@ public class ApplicationContextFactory : IApplicationContextFactory
 {
     private readonly ILogger<ApplicationContext> _logger;
 
-    public ApplicationContextFactory(ILogger<ApplicationContext> logger)
+    public ApplicationContextFactory(
+        ILogger<ApplicationContext> logger)
     {
         _logger = logger;
     }

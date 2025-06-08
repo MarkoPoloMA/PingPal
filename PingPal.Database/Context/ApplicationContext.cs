@@ -8,7 +8,10 @@ public class ApplicationContext : DbContext
 {
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<User> Users => Set<User>();
-    public DbSet<UserRole> UserRoles => Set<UserRole>();
+    public DbSet<UserRole> UserRoles => Set<UserRole>(); 
+    public DbSet<UserChat> UserChats => Set<UserChat>();
+    public DbSet<Chat> Chats => Set<Chat>();
+    public DbSet<Message> Messages => Set<Message>();
 
     private readonly ILogger<ApplicationContext>? _logger;
 
@@ -23,7 +26,7 @@ public class ApplicationContext : DbContext
 		if (optionsBuilder.IsConfigured)
 			return;
 
-		optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=MessengerDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+		optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=PingPal;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
 		optionsBuilder.LogTo(LogMessage, LogLevel.Information);
 	}
 
@@ -66,5 +69,31 @@ public class ApplicationContext : DbContext
             .HasForeignKey(x => x.RoleId);
 
         #endregion
+
+        #region UserChats
+        modelBuilder.Entity<Message>()
+                .HasOne(m => m.Chat)
+                .WithMany()
+                .HasForeignKey(m => m.ChatId);
+
+        modelBuilder.Entity<Message>()
+            .HasOne(m => m.User)
+            .WithMany()
+            .HasForeignKey(m => m.UserId);
+
+        modelBuilder.Entity<UserChat>()
+            .HasKey(uc => new { uc.UserId, uc.ChatId }); 
+
+        modelBuilder.Entity<UserChat>()
+            .HasOne(uc => uc.User)
+            .WithMany() 
+            .HasForeignKey(uc => uc.UserId);
+
+        modelBuilder.Entity<UserChat>()
+            .HasOne(uc => uc.Chat)
+            .WithMany() 
+            .HasForeignKey(uc => uc.ChatId);
+        #endregion
+
     }
 }

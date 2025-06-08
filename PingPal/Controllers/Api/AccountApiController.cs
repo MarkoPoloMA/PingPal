@@ -40,7 +40,7 @@ public class AccountApiController : ControllerBase
         if (!ModelState.IsValid)
             throw new BadRequestException(ModelState.JoinErrors());
 
-        var user = await _applicationContextUserManager./*FindByNameAndLoadRolesAsync*/FindByIdAsync(login.Login);
+        var user = await _applicationContextUserManager./*FindByNameAndLoadRolesAsync*/FindByNameAsync(login.Login);
         if (user == null || !await _applicationContextUserManager.CheckPasswordAsync(user, login.Password))
             throw new UnauthorizedException("Некорректные логин и(или) пароль");
 

@@ -11,4 +11,5 @@ public class User
     public string NormalizedName { get; set; }
     public string PasswordHash { get; set; }
     public ICollection<UserRole> UserRoles { get; set; }
+    public virtual ICollection<Chat> Chats { get; set; } = new List<Chat>();
 }

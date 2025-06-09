@@ -156,7 +156,6 @@ public class UsersController : Controller
     }
 
     [HttpPost("[controller]/[action]/{id:guid}")]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Delete(
         [FromRoute] Guid id)
     {

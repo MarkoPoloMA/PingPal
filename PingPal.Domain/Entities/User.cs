@@ -6,7 +6,7 @@ public class User
     public string Name { get; set; }
     public string NormalizedName { get; set; }
     public string PasswordHash { get; set; }
-    public ICollection<UserRole> UserRoles { get; set; }
-    public virtual ICollection<Chat> Chats { get; set; } = new List<Chat>();
-	public bool IsAdmin => UserRoles.Any(ur => ur.Role.Name == "Admin");
+    public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
+    public ICollection<Chat> Chats { get; set; } = new List<Chat>();
+	public ICollection<UserContact> UserContacts { get; set; } = new List<UserContact>();
 }

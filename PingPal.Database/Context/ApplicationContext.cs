@@ -12,14 +12,15 @@ public class ApplicationContext : DbContext
     public DbSet<UserChat> UserChats => Set<UserChat>();
     public DbSet<Chat> Chats => Set<Chat>();
     public DbSet<Message> Messages => Set<Message>();
+	public DbSet<UserContact> UserContacts => Set<UserContact>();
 
     private readonly ILogger<ApplicationContext>? _logger;
 
-    public ApplicationContext(
-        ILogger<ApplicationContext>? logger = null)
-    {
-        _logger = logger;
-    }
+	public ApplicationContext(
+		ILogger<ApplicationContext>? logger = null)
+	{
+		_logger = logger;
+	}
 
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
@@ -71,10 +72,11 @@ public class ApplicationContext : DbContext
         #endregion
 
         #region UserChats
-        modelBuilder.Entity<Message>()
-                .HasOne(m => m.Chat)
-                .WithMany()
-                .HasForeignKey(m => m.ChatId);
+		
+		modelBuilder.Entity<Message>()
+            .HasOne(m => m.Chat)
+            .WithMany()
+            .HasForeignKey(m => m.ChatId);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.User)
@@ -93,6 +95,25 @@ public class ApplicationContext : DbContext
             .HasOne(uc => uc.Chat)
             .WithMany() 
             .HasForeignKey(uc => uc.ChatId);
+        #endregion
+
+        #region UserContact
+
+		modelBuilder.Entity<UserContact>()
+			.HasKey(uc => new { uc.UserId, uc.ContactId });
+
+		modelBuilder.Entity<UserContact>()
+			.HasOne(uc => uc.User)
+			.WithMany(u => u.UserContacts)
+			.HasForeignKey(uc => uc.UserId)
+			.OnDelete(DeleteBehavior.NoAction);
+
+		modelBuilder.Entity<UserContact>()
+			.HasOne(uc => uc.Contact)
+			.WithMany() 
+			.HasForeignKey(uc => uc.ContactId)
+			.OnDelete(DeleteBehavior.NoAction);
+
         #endregion
 
     }

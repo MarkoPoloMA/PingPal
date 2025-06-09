@@ -4,6 +4,7 @@ public class Chat
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public DateTime CreatedDate { get; set; }
     public Guid? OwnerUserId { get; set; }
     public User? OwnerUser { get; set; }
     public ICollection<Message> Messages { get; set; } = new List<Message>();

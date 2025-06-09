@@ -47,6 +47,9 @@
     <a asp-action="Create" class="btn btn-primary" style="margin-top: 10px; width: 160px;">
         <i class="fa fa-plus"></i> Создать
     </a>
+    <a asp-controller="ChatMessage" asp-action="Index" class="btn btn-secondary" style="margin-top: 10px; width: 160px;">
+        <i class="fa fa-comments"></i> Показать все чаты
+    </a>
 </div>
 
 <div class="mt-3">
@@ -90,11 +93,14 @@
                         }
                     </td>
                     <td>
-                        <button type="button" class="btn btn-info btn-sm" onclick="openChatModal('@user.Id')">Посмотреть чаты</button>
+                        <a asp-controller="ChatMessage" asp-action="GetUserChats" asp-route-userId="@user.Id" class="btn btn-info btn-sm">Посмотреть чаты</a>
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning btn-sm">Редактировать</a>
-                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">Удалить</a>
+
+                        <form asp-action="Delete" asp-route-id="@user.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Вы уверены, что хотите удалить пользователя @user.Login?');">Удалить</button>
+                        </form>
                     </td>
                 </tr>
             }
@@ -117,24 +123,3 @@
         <div id="chatList"></div>
     </div>
 </div>
-
-<script>
-    async function openChatModal(userId)
-    {
-        сonst response = await fetch(/api/chats/user/${userId});
-
-        const chats = await response.json();    
-        const chatList = document.getElementById('chatList');
-
-        document.getElementById('chatModal').style.display = 'block';
-       
-    }
-
-        function closeChatModal() {
-            document.getElementById('chatModal').style.display = 'none';
-        }
-
-        window.onclick = event => {
-            if (event.target === document.getElementById('chatModal')) closeChatModal();
-    }
-</script>

@@ -1,33 +1,23 @@
 ﻿@{
     ViewData["Title"] = "Домашняя страница";
 }
-<div class="container">
-    <div class="text-center">
-        <img src="~/images/2.jpg" />
-        <p class="author">ZVGorshkov and markonii</p>
-    </div>
+
+<div class="text-center">
+    <img src="~/images/1.jpg" />
+    <p class="author">ZVGorshkov and markonii</p>
 </div>
 
 <style>
-    body {
-        background-color: #f0f0f0; /* Серо-молочный цвет */
-        margin: 0; /* Убираем отступы */
-        padding: 0; /* Убираем отступы */
-        font-family: Arial, sans-serif; /* Шрифт для текста */
-    }
-
     .text-center {
-        position: relative; /* Добавляем позиционирование для контейнера */
-        text-align: center; /* Центрируем текст */
-        padding: 20px; /* Добавляем немного отступа */
+        position: relative; 
     }
-
+    
     .author {
         font-size: 2em;
         color: #555;
-        position: absolute; /* Позиционируем автора абсолютно */
-        bottom: -30px; /* Сдвигаем вниз */
-        left: 50%; /* Центрируем по горизонтали */
-        transform: translateX(-50%); /* Центрируем текст */
+        position: absolute; 
+        bottom: -30px; 
+        left: 50%; 
+        transform: translateX(-50%); 
     }
 </style>

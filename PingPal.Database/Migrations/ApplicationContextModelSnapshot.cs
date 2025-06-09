@@ -28,6 +28,9 @@ namespace PingPal.Database.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -151,6 +154,21 @@ namespace PingPal.Database.Migrations
                     b.ToTable("UserChats");
                 });
 
+            modelBuilder.Entity("PingPal.Domain.Entities.UserContact", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ContactId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserId", "ContactId");
+
+                    b.HasIndex("ContactId");
+
+                    b.ToTable("UserContacts");
+                });
+
             modelBuilder.Entity("PingPal.Domain.Entities.UserRole", b =>
                 {
                     b.Property<Guid>("UserId")
@@ -221,6 +239,25 @@ namespace PingPal.Database.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("PingPal.Domain.Entities.UserContact", b =>
+                {
+                    b.HasOne("PingPal.Domain.Entities.User", "Contact")
+                        .WithMany()
+                        .HasForeignKey("ContactId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("PingPal.Domain.Entities.User", "User")
+                        .WithMany("UserContacts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Contact");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("PingPal.Domain.Entities.UserRole", b =>
                 {
                     b.HasOne("PingPal.Domain.Entities.Role", "Role")
@@ -255,6 +292,8 @@ namespace PingPal.Database.Migrations
             modelBuilder.Entity("PingPal.Domain.Entities.User", b =>
                 {
                     b.Navigation("Chats");
+
+                    b.Navigation("UserContacts");
 
                     b.Navigation("UserRoles");
                 });

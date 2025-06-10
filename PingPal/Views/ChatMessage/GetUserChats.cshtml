@@ -1,0 +1,29 @@
+﻿@model IEnumerable<PingPal.Models.Chats.ChatModel>
+
+<h2>Список чатов пользователя</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Название</th>
+        <th>Владелец</th>
+        <th>Статус</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var chat in Model)
+    {
+        <tr>
+            <td>@chat.Name</td>
+            <td>@chat.OwnerUserName</td>
+            <td>@(chat.IsDeleted ? "Удален" : "Активен")</td>
+            <td>
+                <a asp-action="GetChatById" asp-route-chatId="@chat.Id" class="btn btn-info">Просмотреть</a>
+            </td> 
+        </tr>
+    }
+    </tbody>
+</table>
+
+<a asp-controller="Users" asp-action="Index" class="btn btn-sm btn-secondary" style="margin-top: 5px; width: 200px;"><i class="fa fa-ban"></i> Вернуться</a>

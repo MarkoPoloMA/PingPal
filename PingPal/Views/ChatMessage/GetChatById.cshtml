@@ -1,0 +1,30 @@
+﻿@model PingPal.Models.Chats.ChatModel
+
+<h2>Информация о чате: @Model.Name</h2>
+
+<table class="table">
+    <tr>
+        <th>Владелец</th>
+        <td>@Model.OwnerUserName</td>
+    </tr>
+    <tr>
+        <th>Статус</th>
+        <td>@(Model.IsDeleted ? "Удален" : "Активен")</td>
+    </tr>
+    <tr>
+        <th>Создан</th>
+        <td>@Model.CreatedDate.ToString("g")</td>
+    </tr>
+</table>
+
+<h3>Добавить пользователя в чат</h3>
+<form asp-action="AddUserToChat" method="post">
+    <input type="hidden" name="name" value="@Model.Name" />
+    <div class="form-group">
+        <label for="Name">Введите имя пользователя:</label>
+        <input type="text" name="name" required class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Добавить пользователя</button>
+</form>
+
+<a asp-action="Index" class="btn btn-sm btn-secondary" style="margin-top: 5px; width: 200px;"><i class="fa fa-ban"></i> Вернуться</a>

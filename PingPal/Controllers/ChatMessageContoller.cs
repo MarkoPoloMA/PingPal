@@ -17,6 +17,7 @@ public class ChatMessageController : Controller
 	public async Task<IActionResult> Index()
 	{
 		var chats = await _chatService.GetAllChatsAsync();
+
 		var chatModels = chats.Select(chat => new ChatModel
 		{
 			Id = chat.Id,
@@ -28,7 +29,13 @@ public class ChatMessageController : Controller
 
 		return View(chatModels);
 	}
+	[HttpPost("chat/{userId}")]
+	public async Task<IActionResult> CreateDataBase(Guid userId)
+	{
+		var chats = await _chatService.CreateChatDataBase(userId);
 
+		return RedirectToAction("GetUserChats", new {userId} );
+	}
 	[HttpGet("chat/{chatId}")]
 	public async Task<IActionResult> GetChatById(Guid chatId)
 	{
@@ -39,7 +46,18 @@ public class ChatMessageController : Controller
 
         return View(chatModel);
 	}
+    [HttpGet("chat/group/{chatId}")]
+    public async Task<IActionResult> GetGroupChatById(Guid chatId)
+    {
+        var chat = await _chatService.GetGroupChatsByUserIdAsync(chatId);
 
+		var chatModel = chat.Select(x => x.ToChatModel()).ToList();
+
+        if (chat == null)
+            return NotFound();
+
+        return View(chatModel);
+    }
     [HttpPost("chat/{chatId}/users/add")]
     public async Task<IActionResult> AddUserToChat(Guid chatId, Guid userId)
     {

@@ -6,7 +6,9 @@ public class User
     public string Name { get; set; }
     public string NormalizedName { get; set; }
     public string PasswordHash { get; set; }
+    public ICollection<Message> Messages { get; set; } = new List<Message>();
     public ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
-    public ICollection<Chat> Chats { get; set; } = new List<Chat>();
-	public ICollection<UserContact> UserContacts { get; set; } = new List<UserContact>();
+    public ICollection<UserChat> UserChats { get; set; } = new List<UserChat>();
+    public ICollection<UserContact> OwnedUserContacts { get; set; } = new List<UserContact>();
+    public ICollection<UserContact> AddedUserContacts { get; set; } = new List<UserContact>();
 }

@@ -3,19 +3,31 @@
 <h2>Информация о чате: @Model.Name</h2>
 
 <table class="table">
-    <tr>
-        <th>Владелец</th>
-        <td>@Model.OwnerUserName</td>
-    </tr>
-    <tr>
-        <th>Статус</th>
-        <td>@(Model.IsDeleted ? "Удален" : "Активен")</td>
-    </tr>
-    <tr>
-        <th>Создан</th>
-        <td>@Model.CreatedDate.ToString("g")</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Владелец</th>
+            <td>@Model.OwnerUserName</td>
+        </tr>
+        <tr>
+            <th>Статус</th>
+            <td>@(Model.IsDeleted ? "Удален" : "Активен")</td>
+        </tr>
+        <tr>
+            <th>Создан</th>
+            <td>@Model.CreatedDate.ToString("g")</td>
+        </tr>
+    </thead>
 </table>
+
+<h3>Кто есть в этом чате</h3>
+<div class="user-list">
+    @foreach (var userChat in Model.UserChats)
+    {
+        <div class="user-card">
+            <span>@userChat.User.Name</span>
+        </div>
+    }
+</div>
 
 <h3>Добавить пользователя в чат</h3>
 <form asp-action="AddUserToChat" method="post">
@@ -28,3 +40,22 @@
 </form>
 
 <a asp-action="Index" class="btn btn-sm btn-secondary" style="margin-top: 5px; width: 200px;"><i class="fa fa-ban"></i> Вернуться</a>
+
+<style>
+    .user-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px; 
+    }
+
+    .user-card {
+        background-color: #007bff; 
+        color: white; 
+        padding: 8px 10px; 
+        border-radius: 5px;
+        flex: 1 1 calc(30% - 5px);
+        box-sizing: border-box; 
+        text-align: center; 
+        font-size: 14px; 
+    }
+</style>

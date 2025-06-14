@@ -71,30 +71,35 @@ public class ApplicationContext : DbContext
 
         #endregion
 
-        #region UserChats
-		
-		modelBuilder.Entity<Message>()
+        #region Message
+
+        modelBuilder.Entity<Message>()
             .HasOne(m => m.Chat)
-            .WithMany()
+            .WithMany(m => m.Messages)
             .HasForeignKey(m => m.ChatId);
 
         modelBuilder.Entity<Message>()
             .HasOne(m => m.User)
-            .WithMany()
+            .WithMany(m => m.Messages)
             .HasForeignKey(m => m.UserId);
+
+        #endregion
+
+        #region UserChats
 
         modelBuilder.Entity<UserChat>()
             .HasKey(uc => new { uc.UserId, uc.ChatId }); 
 
         modelBuilder.Entity<UserChat>()
             .HasOne(uc => uc.User)
-            .WithMany() 
+            .WithMany(uc => uc.UserChats)
             .HasForeignKey(uc => uc.UserId);
 
         modelBuilder.Entity<UserChat>()
             .HasOne(uc => uc.Chat)
-            .WithMany() 
+            .WithMany(uc => uc.UserChats)
             .HasForeignKey(uc => uc.ChatId);
+
         #endregion
 
         #region UserContact
@@ -104,15 +109,15 @@ public class ApplicationContext : DbContext
 
 		modelBuilder.Entity<UserContact>()
 			.HasOne(uc => uc.User)
-			.WithMany(u => u.UserContacts)
+			.WithMany(u => u.OwnedUserContacts)
 			.HasForeignKey(uc => uc.UserId)
 			.OnDelete(DeleteBehavior.NoAction);
 
-		modelBuilder.Entity<UserContact>()
-			.HasOne(uc => uc.Contact)
-			.WithMany() 
-			.HasForeignKey(uc => uc.ContactId)
-			.OnDelete(DeleteBehavior.NoAction);
+        modelBuilder.Entity<UserContact>()
+            .HasOne(uc => uc.Contact)
+            .WithMany(uc => uc.AddedUserContacts)
+            .HasForeignKey(uc => uc.ContactId)
+            .OnDelete(DeleteBehavior.NoAction);
 
         #endregion
 

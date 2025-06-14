@@ -16,8 +16,9 @@ namespace PingPal.Convert
 				Name = chat.Name,
 				OwnerUserName = chat.OwnerUser?.Name,
 				CreatedDate = chat.CreatedDate,
-				IsDeleted = chat.IsDeleted
-			};
+				IsDeleted = chat.IsDeleted,
+                UserChats = chat.UserChats
+            };
 		}
 	}
 }
